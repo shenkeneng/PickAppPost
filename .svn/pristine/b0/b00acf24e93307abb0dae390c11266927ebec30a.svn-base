@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@mipmap/button_version_selector" />
+    <item android:drawable="@mipmap/button_version_selector_no" />
+</selector>

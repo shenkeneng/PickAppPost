@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C8000000"
+    android:fitsSystemWindows="true">
+
+    <!--android:background="#C8000000"-->
+    <LinearLayout
+        android:id="@+id/ll_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_barcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/frxs_red"
+            android:background="@color/white"
+            android:textSize="@dimen/twenty_six"
+            android:text="条       码："/>
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/frxs_red"
+            android:background="@color/white"
+            android:textSize="@dimen/twenty_six"
+            android:text="商品名称："
+            android:layout_marginTop="1px"/>
+    </LinearLayout>
+
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/iv_photo"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@id/ll_text"
+        android:layout_centerInParent="true"/>
+
+</android.support.percent.PercentRelativeLayout>

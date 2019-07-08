@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_refresh" />
+
+    <com.frxs.PickApp.widget.EmptyView
+        android:id="@+id/emptyview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_circle_rectangle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_circle_rectangle"
+        android:orientation="vertical">
+
+        <com.frxs.PickApp.widget.ClearEditText
+            android:id="@+id/et_search_order"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_gray_border_rectangle"
+            android:hint="输入门店编号、待装区搜索"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/eighteen" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ListView
+                android:id="@+id/lv_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:scrollbars="none"
+                android:dividerHeight="@dimen/common_padding"
+                android:divider="@color/white"/>
+
+            <android.support.design.widget.FloatingActionButton
+                app:backgroundTint="@color/frxs_black_light"
+                app:rippleColor="@color/frxs_black_dark"
+                android:id="@+id/fab_switch_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="10dp"
+                android:src="@mipmap/icon_picking"
+                app:borderWidth="0dp"/>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

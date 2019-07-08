@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.frxs.PickApp.HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/frxs_gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:drawableRight="@mipmap/icon_mine"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="45dp" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@color/frxs_balck"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/tv_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:drawableLeft="@mipmap/icon_refresh"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:text="刷新"
+            android:padding="10dp"
+            android:textColor="@color/frxs_balck"
+            android:textSize="@dimen/twenty_six" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_pick_home">
+
+        <LinearLayout
+            android:id="@+id/picking_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:divider="@drawable/shape_divider_line"
+            android:showDividers="middle"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/all_order_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_summary"
+                    android:drawablePadding="@dimen/common_padding"
+                    android:text="@string/status_all"
+                    android:textSize="@dimen/order_status_size"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/all_order_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/order_count_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/picking_order_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_picking"
+                    android:drawablePadding="@dimen/common_padding"
+                    android:text="@string/status_picking"
+                    android:textSize="@dimen/order_status_size"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/picking_order_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/order_count_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/be_picking_order_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_be_picking"
+                    android:drawablePadding="@dimen/common_padding"
+                    android:text="@string/status_be_picking"
+                    android:textSize="@dimen/order_status_size"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/be_picking_order_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/order_count_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/picked_order_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_picked_top"
+                    android:drawablePadding="@dimen/common_padding"
+                    android:text="@string/status_picked"
+                    android:textSize="@dimen/order_status_size"
+                    android:textColor="@color/white"
+                    android:id="@+id/textView" />
+
+                <TextView
+                    android:id="@+id/picked_order_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/order_count_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/picking_layout"
+            android:gravity="center">
+
+            <com.frxs.PickApp.widget.WidthEquelsHeightTextView
+                android:id="@+id/tv_start_pick"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_red_circle"
+                android:gravity="center"
+                android:text="开始拣货"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

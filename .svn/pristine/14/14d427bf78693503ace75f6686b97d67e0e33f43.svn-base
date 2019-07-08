@@ -1,0 +1,363 @@
+package com.frxs.PickApp.application;
+
+import android.app.Activity;
+import android.app.Application;
+import android.app.Dialog;
+import android.text.TextUtils;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.TextView;
+import com.ewu.core.utils.SerializableUtil;
+import com.ewu.core.utils.SharedPreferencesHelper;
+import com.ewu.core.utils.SystemUtils;
+import com.ewu.core.utils.ToastUtils;
+import com.frxs.PickApp.HomeActivity;
+import com.frxs.PickApp.PickingClassicalActivity;
+import com.frxs.PickApp.PickingSimpleActivity;
+import com.frxs.PickApp.R;
+import com.frxs.PickApp.comms.Config;
+import com.frxs.PickApp.comms.GlobelDefines;
+import com.frxs.PickApp.greendao.utils.DbCore;
+import com.frxs.PickApp.model.AppVersionGetRespData;
+import com.frxs.PickApp.model.UserInfo;
+import com.frxs.PickApp.rest.RestClient;
+import com.frxs.PickApp.rest.model.AjaxParams;
+import com.frxs.PickApp.rest.model.ApiResponse;
+import com.frxs.PickApp.rest.service.SimpleCallback;
+import com.frxs.PickApp.service.apkUpdate.DownloadService;
+import com.frxs.PickApp.utils.DateUtil;
+import java.io.IOException;
+import java.util.Date;
+import retrofit2.Call;
+
+/**
+ * Created by ewu on 2016/2/18.
+ */
+public class FrxsApplication extends Application {
+    private static FrxsApplication mInstance;
+    private static SparseArray<RestClient> restClientSparseArray = new SparseArray<RestClient>();
+    private UserInfo mUserInfo;// 用户信息
+    private HomeActivity homeActivity;
+
+    private boolean needCheckUpgrade = true; // 是否需要检测更新
+
+    public static Class<?> versionSelectorClass = PickingSimpleActivity.class; // 初始化跳转到精简版
+
+    public static FrxsApplication getInstance() {
+        if (mInstance == null) {
+            throw new IllegalStateException("Not yet initialized");
+        }
+
+        return mInstance;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        if (mInstance != null) {
+            throw new IllegalStateException("Not a singleton");
+        }
+
+        mInstance = this;
+
+        DbCore.init(this);
+        DbCore.enableQueryBuilderLog();
+
+        initData();
+
+        initRestClient();
+    }
+
+    public static RestClient getRestClient(int clientType) {
+        return restClientSparseArray.get(clientType);
+    }
+
+    private void initRestClient() {
+        restClientSparseArray.put(Config.TYPE_BASE, new RestClient(Config.getBaseUrl(Config.TYPE_BASE, getEnvironment())));
+        restClientSparseArray.put(Config.TYPE_UPDATE, new RestClient(Config.getBaseUrl(Config.TYPE_UPDATE, getEnvironment())));
+    }
+
+    public boolean isNeedCheckUpgrade() {
+        return needCheckUpgrade;
+    }
+
+    public void setHomeActivity(HomeActivity homeActivity) {
+        this.homeActivity = homeActivity;
+    }
+
+    public HomeActivity getHomeAcivity() {
+        return homeActivity;
+    }
+
+    public void exitApp(int code) {
+        System.exit(code);
+    }
+
+    private void initData() {
+        // Get the user Info
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, Config.PREFS_NAME);
+        String userStr = helper.getString(Config.KEY_USER, "");
+        if (!TextUtils.isEmpty(userStr)) {
+            Object object = null;
+            try {
+                object = SerializableUtil.str2Obj(userStr);
+                if (null != object) {
+                    mUserInfo = (UserInfo) object;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        int versionSelector = helper.getInt(GlobelDefines.KEY_VERSION_SELECTOR, GlobelDefines.VersionSelector.VERSION_SIMPLE);
+        switch (versionSelector) {
+            case GlobelDefines.VersionSelector.VERSION_CLASSIC:
+                versionSelectorClass = PickingClassicalActivity.class;
+                break;
+            case GlobelDefines.VersionSelector.VERSION_SIMPLE:
+                versionSelectorClass = PickingSimpleActivity.class;
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.mUserInfo = userInfo;
+
+        String userStr = "";
+        try {
+            userStr = SerializableUtil.obj2Str(userInfo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, Config.PREFS_NAME);
+        helper.putValue(Config.KEY_USER, userStr);
+    }
+
+    public UserInfo getUserInfo() {
+        if (null == mUserInfo) {
+            initData();
+        }
+
+        return mUserInfo;
+    }
+
+    public void setEnvironment(int environmentId) {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        helper.putValue(GlobelDefines.KEY_ENVIRONMENT, environmentId);
+
+        restClientSparseArray.clear();
+        restClientSparseArray.put(Config.TYPE_BASE, new RestClient(Config.getBaseUrl(Config.TYPE_BASE, environmentId)));
+        restClientSparseArray.put(Config.TYPE_UPDATE, new RestClient(Config.getBaseUrl(Config.TYPE_UPDATE, environmentId)));
+    }
+
+    public int getEnvironment() {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        return helper.getInt(GlobelDefines.KEY_ENVIRONMENT, Config.networkEnv);
+    }
+
+    public String getUserAccount() {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        return helper.getString(GlobelDefines.KEY_FIRST_ENTER, "");
+    }
+
+    public void setUserAccount(String userAccount) {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        helper.putValue(GlobelDefines.KEY_FIRST_ENTER, userAccount);
+    }
+
+    public String getShelfAreaID() {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        return helper.getString(GlobelDefines.KEY_SHELF_AREAID, "");
+    }
+
+    public void setShelfAreaID(String ShelfAreaID) {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        helper.putValue(GlobelDefines.KEY_SHELF_AREAID, ShelfAreaID);
+    }
+
+    /**
+     * 更新版本的网路请求
+     *
+     * @param activity
+     */
+    public void prepare4Update(final Activity activity, final boolean isShow) {
+        String strYMD = DateUtil.Date2StringYMD(new Date());
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, Config.PREFS_NAME);
+        String localYMD = helper.getString(Config.KEY_CHECK_DATE, "");
+        //当且仅当打开APP或者APP运行时每日的首次请求时需要检测版本号
+        if (!strYMD.equals(localYMD)) {
+            helper.putValue(Config.KEY_CHECK_DATE, strYMD);
+            needCheckUpgrade = true;
+        }
+
+        if (needCheckUpgrade) {
+            needCheckUpgrade = false;
+        } else {
+            return;
+        }
+
+        AjaxParams params = new AjaxParams();
+//        params.put("Sign", MD5.ToMD5("GetAppVersion"));
+        params.put("SysType", "0"); // 0:android;1:ios
+        params.put("AppType", "1"); // 软件类型(0:兴盛店订货平台, 1:拣货APP. 2:兴盛店配送APP,3:装箱APP, 4:采购APP, 5:网络店订货平台,6：网络店配送APP)
+        RestClient updateClient = getRestClient(Config.TYPE_UPDATE);
+        updateClient.getApiService().PostAppVersion(params.getUrlParams()).enqueue(new SimpleCallback<ApiResponse<AppVersionGetRespData>>() {
+            @Override
+            public void onResponse(ApiResponse<AppVersionGetRespData> result, int code, String msg) {
+                if (result.getFlag().equals("0")) {
+                    AppVersionGetRespData respData = result.getData();
+                    if (null != respData) {
+                        int versionCode = Integer.valueOf(SystemUtils.getVersionCode(getApplicationContext()));
+
+                        String curVersion = respData.getCurVersion();
+                        int curCode = respData.getCurCode();
+
+                        if (versionCode < curCode) {
+                            int updateFlag = respData.getUpdateFlag();
+                            String updateRemark = respData.getUpdateRemark();
+                            String downloadUrl = respData.getDownUrl();
+                            switch (updateFlag) {
+                                case 0: // 0:不需要
+                                    break;
+                                case 1: // 1:建议升级
+                                    showUpdateDialog(activity, false, downloadUrl, curVersion, updateRemark);
+                                    break;
+                                case 2: // 2：强制升级
+                                    showUpdateDialog(activity, true, downloadUrl, curVersion, updateRemark);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                } else {
+                    ToastUtils.show(activity, result.getInfo());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<AppVersionGetRespData>> call, Throwable t) {
+                super.onFailure(call, t);
+            }
+        });
+    }
+
+//    private void enableUmengUpdateAgent(Activity activity) {
+//        if (needCheckUpgrade) {
+//            UmengUpdateAgent.setDefault();
+//            UmengUpdateAgent.setUpdateOnlyWifi(false);
+//            UmengUpdateAgent.update(activity);
+//
+//            needCheckUpgrade = false;
+//        }
+//    }
+
+    /**
+     * 弹出更新的dialog
+     *
+     * @param activity
+     * @param isForceUpdate
+     * @param downloadUrl
+     * @param curVersion
+     * @param updateRemark
+     * @description
+     */
+    private void showUpdateDialog(final Activity activity, final boolean isForceUpdate,
+                                  final String downloadUrl, String curVersion, String updateRemark) {
+        final Dialog updateDialog = new Dialog(activity, android.R.style.Theme_Translucent_NoTitleBar);
+        updateDialog.setContentView(R.layout.dialog_update);// 自定义对话框
+        TextView tvContent = (TextView) updateDialog.findViewById(R.id.update_content);// 更新内容
+        tvContent.setText(String.format(activity.getResources().getString(R.string.updade_content), curVersion,
+                updateRemark));
+        updateDialog.setCanceledOnTouchOutside(false);// 对话框外点击无效
+
+        // 立即更新
+        updateDialog.findViewById(R.id.update_id_ok).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                updateDialog.dismiss();
+//                UpdateService updateService = new UpdateService(activity, downloadUrl, "", isForceUpdate);
+//                updateService.downFile();
+
+                DownloadService downLoadService = new DownloadService(activity, downloadUrl, isForceUpdate);
+                downLoadService.execute();
+                if (!isForceUpdate) {
+                    ToastUtils.showShortToast(activity, "程序在后台下载，请稍等...");
+                }
+            }
+        });
+
+        // 强制更新
+        if (isForceUpdate) {
+            updateDialog.findViewById(R.id.update_id_cancel).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    updateDialog.dismiss();
+                    activity.finish();
+                    FrxsApplication.getInstance().exitApp(0);
+                }
+            });
+            updateDialog.setCancelable(false);
+        } else {
+            updateDialog.findViewById(R.id.update_id_cancel).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    updateDialog.dismiss();
+                }
+            });
+        }
+        updateDialog.show();
+    }
+
+    /**
+     * 退出登录
+     * 在这里做，如：清空用户信息，禁止接收消息之类的操作
+     */
+    public void logout() {
+        // 清空用户信息
+        setUserInfo(null);
+    }
+
+    public boolean isPrinted(String currentOrderId) {
+        SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+        boolean printForced = helper.getBoolean(GlobelDefines.KEY_PRINT_SETTING, true);
+        if (printForced) {
+            if (!TextUtils.isEmpty(currentOrderId)) {
+                String printedOrderIdList = helper.getString(GlobelDefines.KEY_ORDER_PRINT, "");
+                if (!TextUtils.isEmpty(printedOrderIdList) && printedOrderIdList.contains(currentOrderId)) {
+                    return true;
+                }
+            }
+        } else {
+            return true; //非强制打印，直接标识为已经打印
+        }
+
+        return false;
+    }
+
+    /**
+     * 标记打印状态
+     *
+     * @param currentOrderId 当前订单
+     */
+    public void setPrinted(String currentOrderId) {
+        if (!TextUtils.isEmpty(currentOrderId)) {
+            SharedPreferencesHelper helper = SharedPreferencesHelper.getInstance(this, GlobelDefines.PREFS_NAME);
+            String orderIdList = helper.getString(GlobelDefines.KEY_ORDER_PRINT, "");
+            if (!orderIdList.contains(currentOrderId)) {
+                helper.putValue(GlobelDefines.KEY_ORDER_PRINT, orderIdList + "," + currentOrderId);
+            }
+        }
+    }
+
+}

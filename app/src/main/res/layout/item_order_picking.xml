@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:textSize="@dimen/eighteen"
+            android:gravity="center"
+            android:paddingRight="8dp"
+            android:text="000001"/>
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:textSize="@dimen/eighteen"
+            android:text="[0788]早安星城店"/>
+
+        <TextView
+            android:id="@+id/tv_picker_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:textSize="@dimen/eighteen"
+            android:gravity="center"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:text="000001"/>
+
+        <TextView
+            android:id="@+id/tv_station_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:textSize="@dimen/twenty"
+            android:gravity="center"
+            android:paddingRight="5dp"
+            android:paddingLeft="8dp"
+            android:textStyle="bold"
+            android:text="000001"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="google_colors">
+        <item>@color/red</item>
+        <item>@color/blue</item>
+        <item>@color/yellow</item>
+        <item>@color/green</item>
+    </integer-array>
+
+    <string-array name="run_environments">
+        <item>线上环境[%1$s]</item>
+        <item>测试环境[%1$s]</item>
+        <item>预发布环境[%1$s]</item>
+       <!-- <item>迁移环境[%1$s]</item>
+        <item>TF环境[%1$s]</item>
+        <item>集成环境[%1$s]</item>-->
+    </string-array>
+
+</resources>

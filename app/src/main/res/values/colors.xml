@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FFC93437</color>
+
+    <color name="red">#FFC93437</color>
+    <color name="red_alpha">#AAC93437</color>
+    <color name="blue">#FF375BF1</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#FF34A350</color>
+    <color name="green_alpha">#AA34A350</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#AAAAAA</color>
+    <color name="black">#000000</color>
+
+    <color name="frxs_red">#d80c18</color>
+    <color name="frxs_blue">#0096ff</color>
+    <color name="frxs_orange">#f0831e</color>
+    <color name="frxs_black_dark">#404040</color>
+    <color name="frxs_black_light">#909090</color>
+    <color name="frxs_gray_dark">#dfdfdf</color>
+    <color name="frxs_gray_light">#f8f8f8</color>
+    <color name="frxs_green">#3a9f48</color>
+    <color name="frxs_green_dark">#e5ffce</color>
+    <color name="frxs_green_light">#e3fff1</color>
+    <color name="frxs_yellow">#fff5d5</color>
+    <color name="frxs_yellow_dark">#df9b00</color>
+    <color name="frxs_gray">#f8f8f8</color>
+    <color name="frxs_balck">#404040</color>
+    <color name="frxs_transition">#00000000</color>
+
+    <color name="dialog_font">#00adfd</color>
+    <color name="frxs_blue_light">#BFEFFF</color>
+
+</resources>

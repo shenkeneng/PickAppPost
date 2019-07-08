@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#99232323"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/umeng_update_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_white_circle_rectangle"
+        android:orientation="vertical"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_dialog_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="是否选择该订单继续拣货？"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:layout_margin="20dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/frxs_balck" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_white_btn"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="关闭"
+                android:textColor="@color/frxs_balck"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_commit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_red_border_btn"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="确定"
+                android:textColor="@color/frxs_red"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

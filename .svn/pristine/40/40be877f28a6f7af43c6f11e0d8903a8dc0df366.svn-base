@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_red_noright" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/select_environment"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/icon_logo" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp">
+
+            <com.frxs.PickApp.widget.ClearEditText
+                android:id="@+id/login_account_edit"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:background="@drawable/circle_frame_border"
+                android:drawableLeft="@mipmap/icon_account"
+                android:drawablePadding="5dp"
+                android:hint="@string/hint_login_account"
+                android:lines="1"
+                android:paddingLeft="15dp"
+                android:textColor="@color/frxs_black_light"
+                android:textColorHint="@color/frxs_gray_dark"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <com.frxs.PickApp.widget.ClearEditText
+            android:id="@+id/login_password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/circle_frame_border"
+            android:drawableLeft="@mipmap/icon_password"
+            android:drawablePadding="5dp"
+            android:hint="@string/hint_login_password"
+            android:imeOptions="actionGo"
+            android:lines="1"
+            android:paddingLeft="15dp"
+            android:password="true"
+            android:textColor="@color/frxs_black_light"
+            android:textColorHint="@color/frxs_gray_dark"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/login_commit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_red_border_rectangle"
+            android:padding="10dp"
+            android:text="@string/btn_login"
+            android:textColor="@color/frxs_red"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.frxs.PickApp">
+
+    <!-- Bluetooth required -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!-- Umeng Update Requist Permission Start -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Umeng Update Requist Permission End -->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".application.FrxsApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:label="登录页面">
+        </activity>
+
+        <activity
+             android:name=".LoginActivity"
+             android:windowSoftInputMode="adjustResize|stateHidden"
+             android:screenOrientation="portrait">
+         </activity>
+
+        <activity
+            android:name=".MineActivity"
+            android:screenOrientation="portrait"
+            android:label="个人中心页面">
+        </activity>
+
+        <activity
+            android:name=".PickedActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:label="已拣货页面">
+        </activity>
+        <activity android:name=".BluetoothActivity"
+            android:screenOrientation="portrait"
+            android:label="蓝牙打印页面">
+        </activity>
+
+        <activity android:name=".OrderAllActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:label="订单汇总页面">
+        </activity>
+
+        <activity android:name=".OrderPickingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:label="正在拣货订单页面">
+        </activity>
+
+        <activity android:name=".OrderWaitingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:label="正在拣货订单页面">
+        </activity>
+
+        <activity android:name=".UpdatePswActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="修改密码页面">
+        </activity>
+        <activity android:name=".FontSizeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="修改字体页面">
+        </activity>
+        <activity android:name=".PhotoLookActivity"
+            android:screenOrientation="portrait"
+            android:label="查看大图页面">
+        </activity>
+
+        <activity android:name=".OrderGoodsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="订单商品详情页面"/>
+
+        <activity android:name=".PickingClassicalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="正在拣货经典版页面"/>
+
+        <activity android:name=".PickingSimpleActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="正在拣货精简版页面"/>
+
+        <activity android:name=".SearchBluetoothActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="设置蓝牙页面"/>
+
+        <activity android:name=".OrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:label="查看订单详情页面">
+        </activity>
+
+        <!-- Umeng Update requist configuration start-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57c0027867e58e44f5000171" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" >
+        </meta-data>
+        <!-- Umeng Update requist configuration end-->
+
+        <!-- 兼容6.0、7.0安装应用文件的uri地址不同的问题 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+    </application>
+
+</manifest>
